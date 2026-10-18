@@ -8,8 +8,11 @@
         },
         "Programs/AsmASM/AsmASM": {
             "activeTargetType": "ITSboard_Assembly"
+        },
+        "Programs/A1ASM/A1ASM": {
+            "activeTargetType": "ITSboard_Assembly"
         }
     },
-    "activeSolution": "../Programs/AsmASM/AsmASM.csolution.yml",
+    "activeSolution": "../Programs/A1ASM/A1ASM.csolution.yml",
     "activeTarget": "ITSboard_Assembly"
 }
