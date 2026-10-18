@@ -22,7 +22,7 @@ function Validate-ProjectName {
     }
 }
 
-# Funktion zum direkten Kopieren der Inhalte des Template-Verzeichnisses 
+# Funktion zum direkten Kopieren der Inhalte des Template-Verzeichnisses
 # und Ersetzen von 'template' durch den Projektnamen
 function Copy-And-Replace-Recursive {
     param (
@@ -46,7 +46,7 @@ function Copy-And-Replace-Recursive {
 
             Write-Host "Relativer Pfad (ersetzt): $replacedRelativePath" # Debugging-Ausgabe
 
-            $targetPath = Join-Path $dest_dir $replacedRelativePath 
+            $targetPath = Join-Path $dest_dir $replacedRelativePath
 
             Write-Host "Zielpfad: $targetPath" # Debugging-Ausgabe
 
@@ -139,7 +139,7 @@ function Main {
         $template_dir = $C_TEMPLATE_DIR
     } elseif ($project_type -eq "--asm") {
         $template_dir = $ASM_TEMPLATE_DIR
-        $project_name = "$project_name`ASM" 
+        $project_name = "$project_name`ASM"
     } else {
         Write-Host "Ungültiger Projekttyp. Verwenden Sie --c für C-Projekte oder --asm für ASM-Projekte."
         exit 1
@@ -159,7 +159,11 @@ function Main {
     Copy-And-Replace-Recursive -template_path $template_dir -dest_dir $project_dir -project_name $project_name
 
     # Erstellte .vscode.d Verzeichnis - nicht schoen, aber einfach und robust
-    mkdir "$project_dir\.vscode.d"
+    if (-not (Test-Path "$project_dir\.vscode.d")) {
+        mkdir "$project_dir\.vscode.d"
+    } else {
+        Write-Host "Verzeichniserstellung fehlgeschlagen. Das Verzeichnis: $project_dir\.vscode.d existiert bereits."
+    }
     cp "$template_dir\.vscode.d\tasks.json"  "$project_dir\.vscode.d"
 
     Write-Host "Projekt '$project_name' erfolgreich erstellt in '$project_dir'."

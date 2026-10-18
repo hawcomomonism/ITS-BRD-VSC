@@ -1,0 +1,15 @@
+{
+    "targetSet": {
+        "Programs/MyFirstCProject/MyFirstCProject": {
+            "activeTargetType": "ITSboard"
+        },
+        "Programs/MyFirstAsmProjectASM/MyFirstAsmProjectASM": {
+            "activeTargetType": "ITSboard_Assembly"
+        },
+        "Programs/AsmASM/AsmASM": {
+            "activeTargetType": "ITSboard_Assembly"
+        }
+    },
+    "activeSolution": "../Programs/AsmASM/AsmASM.csolution.yml",
+    "activeTarget": "ITSboard_Assembly"
+}
