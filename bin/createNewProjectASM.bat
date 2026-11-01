@@ -17,10 +17,15 @@ if "%1"=="" (
     set "project_name=%2"
 )
 
+if "%3"=="-main_file_path" (
+    REM Falls eine andere main Datei erstellt werden soll.
+    set "main_file_path=%4"
+)
+
 REM Für ASM-Projekt
 echo Erstelle ASM-Projekt mit dem Namen: %project_name%
 REM Aufruf des PowerShell-Skripts
-pwsh -ExecutionPolicy Bypass -File createGenericProject.ps1 --asm %project_name%
+pwsh -ExecutionPolicy Bypass -File createGenericProject.ps1 --asm %project_name% %main_file_path%
 
 REM Beende das Skript
 exit /b 0

@@ -11,12 +11,13 @@ function Validate-ProjectName {
     )
 
     # Überprüfen, ob der erste Buchstabe groß ist
-    $first_letter = $project_name.Substring(0,1)
+    $first_letter = $project_name.Substring(0, 1)
     Write-Host "Überprüfe den ersten Buchstaben: $first_letter"
 
     if ($first_letter -cmatch '^[A-Z]') {
         return $true
-    } else {
+    }
+    else {
         Write-Host "Der erste Buchstabe des Projektnamens muss ein Großbuchstabe sein."
         return $false
     }
@@ -55,10 +56,12 @@ function Copy-And-Replace-Recursive {
                 if (-not (Test-Path $targetPath)) {
                     New-Item -ItemType Directory -Force -Path $targetPath | Out-Null
                     Write-Host "Verzeichnis erstellt: $targetPath" # Debugging-Ausgabe
-                } else {
+                }
+                else {
                     Write-Host "Verzeichnis existiert bereits: $targetPath" # Debugging-Ausgabe
                 }
-            } else {
+            }
+            else {
                 # Stelle sicher, dass das Zielverzeichnis existiert
                 $targetDir = Split-Path -Parent $targetPath
                 if (-not (Test-Path $targetDir)) {
@@ -75,7 +78,8 @@ function Copy-And-Replace-Recursive {
                 Write-Host "Ersetzungen in Datei durchgeführt: $targetPath" # Debugging-Ausgabe
             }
         }
-    } else {
+    }
+    else {
         Write-Host "Fehler: Template-Verzeichnis '$template_path' nicht gefunden."
     }
 }
@@ -103,7 +107,8 @@ function Set-Permissions {
             $fileAcl = Get-Acl $_.FullName
             $fileAcl.SetAccessRule($accessRule)
             Set-Acl -Path $_.FullName -AclObject $fileAcl
-        } elseif ($_.PSIsContainer) {
+        }
+        elseif ($_.PSIsContainer) {
             $folderAcl = Get-Acl $_.FullName
             $folderAcl.SetAccessRule($accessRule)
             Set-Acl -Path $_.FullName -AclObject $folderAcl
@@ -115,7 +120,9 @@ function Set-Permissions {
 function Main {
     param (
         [string]$project_type,
-        [string]$project_name
+        [string]$project_name,
+        [ValidateScript({ -not $main_file_path || Test-Path $_ -PathType Leaf })]
+        [string]$main_file_path
     )
 
     if (-not $project_type) {
@@ -137,10 +144,12 @@ function Main {
     # Wähle die richtige Vorlage basierend auf dem Projekttyp
     if ($project_type -eq "--c") {
         $template_dir = $C_TEMPLATE_DIR
-    } elseif ($project_type -eq "--asm") {
+    }
+    elseif ($project_type -eq "--asm") {
         $template_dir = $ASM_TEMPLATE_DIR
         $project_name = "$project_name`ASM"
-    } else {
+    }
+    else {
         Write-Host "Ungültiger Projekttyp. Verwenden Sie --c für C-Projekte oder --asm für ASM-Projekte."
         exit 1
     }
@@ -161,10 +170,16 @@ function Main {
     # Erstellte .vscode.d Verzeichnis - nicht schoen, aber einfach und robust
     if (-not (Test-Path "$project_dir\.vscode.d")) {
         mkdir "$project_dir\.vscode.d"
-    } else {
+    }
+    else {
         Write-Host "Verzeichniserstellung fehlgeschlagen. Das Verzeichnis: $project_dir\.vscode.d existiert bereits."
     }
-    cp "$template_dir\.vscode.d\tasks.json"  "$project_dir\.vscode.d"
+
+    if ($main_file_path && Test-Path $main_file_path) {
+        Copy-Item -Path $main_file_path -Destination "$project_dir\Src\main.s" -Force
+    }
+
+    Copy-Item "$template_dir\.vscode.d\tasks.json"  "$project_dir\.vscode.d"
 
     Write-Host "Projekt '$project_name' erfolgreich erstellt in '$project_dir'."
 
@@ -173,4 +188,4 @@ function Main {
 }
 
 # Skript starten
-Main -project_type $args[0] -project_name $args[1]
+Main -project_type $args[0] -project_name $args[1] -main_file_path $args[2]
