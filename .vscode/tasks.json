@@ -28,7 +28,7 @@
             "type": "shell",
             "command": "pyocd",
             "options": {
-                "cwd": "${workspaceFolder}/Programs/A2ASM",
+                "cwd": "${workspaceFolder}/Programs/A3ASM",
                 "shell": {
                     "executable": "cmd.exe",
                     "args": [
@@ -52,7 +52,7 @@
             "type": "shell",
             "command": "pyocd",
             "options": {
-                "cwd": "${workspaceFolder}/Programs/A2ASM",
+                "cwd": "${workspaceFolder}/Programs/A3ASM",
                 "shell": {
                     "executable": "cmd.exe",
                     "args": [
@@ -75,7 +75,7 @@
             "type": "shell",
             "command": "pyocd",
             "options": {
-                "cwd": "${workspaceFolder}/Programs/A2ASM",
+                "cwd": "${workspaceFolder}/Programs/A3ASM",
                 "shell": {
                     "executable": "cmd.exe",
                     "args": [
@@ -112,7 +112,7 @@
             "type": "shell",
             "command": "pyocd",
             "options": {
-                "cwd": "${workspaceFolder}/Programs/A2ASM",
+                "cwd": "${workspaceFolder}/Programs/A3ASM",
                 "shell": {
                     "executable": "cmd.exe",
                     "args": [
