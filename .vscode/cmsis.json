@@ -19,6 +19,6 @@
             "activeTargetType": "ITSboard_Assembly"
         }
     },
-    "activeSolution": "../Programs/A3ASM/A3ASM.csolution.yml",
+    "activeSolution": "../Programs/A1ASM/A1ASM.csolution.yml",
     "activeTarget": "ITSboard_Assembly"
 }
