@@ -30,10 +30,7 @@ main
     nop                         ; no operation
     LDR     R6, =GPIO_D_SET     ; get address of the GPIO data set register
     LDR     R7, =GPIO_D_CLR     ; get address of the GPIO data clear register
-    MOV     R0, #0x01           ; load mask 0b0001
-    MOV     R1, #0x02           ; load mask 0b0010
-    MOV     R2, #0x40           ; load mask 0b0100
-    MOV     R3, #0x80           ; load mask 0b1000
+    MOV     R0, #0x03           ; load mask 0b0001
 
     ; Set LED
     ; STRB    R2, [R6]    ; switch on LED D14 ;true
@@ -41,7 +38,6 @@ main
     ; STRB    R0, [R6]    ; switch on LED D08 ;true
     ; STRB    R0, [R7]    ; switch off LED D08 ;true
     STRB    R0, [R6]    ; switch on LED D08 ;true; Store Register Byte R0, R1 = R6 (true)
-    STRB    R1, [R6]    ; switch on LED D09 ;true
     ; STRB    R2, [R7]    ; switch off LED D14 ;true
     ; STRB    R3, [R7]    ; switch off LED D15 ;true
     b .
